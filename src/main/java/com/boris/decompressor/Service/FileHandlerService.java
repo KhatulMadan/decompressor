@@ -42,7 +42,6 @@ public void processFile(String fileUrl) throws IOException {
     File myFile = fileDownloader.getFile(fileUrl);
     String extension = fileDownloader.getFileExtension(myFile);
 
-    System.out.println("You are already here!");
 
     services.add(bZip2Decompressor);
     services.add(gZipDecompressor);
