@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,10 +16,6 @@ import java.util.List;
 @Service
 @Component
 public class FileHandlerService {
-
-    private List<FileDecompressor> services;
-
-
 
     @Autowired
     private FileDownloader fileDownloader;
@@ -42,6 +39,7 @@ public void processFile(String fileUrl) throws IOException {
     File myFile = fileDownloader.getFile(fileUrl);
     String extension = fileDownloader.getFileExtension(myFile);
 
+    List<FileDecompressor> services = new ArrayList<>();
 
     services.add(bZip2Decompressor);
     services.add(gZipDecompressor);

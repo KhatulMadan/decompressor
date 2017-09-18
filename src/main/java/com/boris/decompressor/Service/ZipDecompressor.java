@@ -16,6 +16,8 @@ import java.util.zip.ZipInputStream;
 @Component
 public class ZipDecompressor implements FileDecompressor {
 
+    private String outputFolder = "/Users/boris/Java/decompressor";
+
     @Override
     public boolean canDecompress(String fileExtension)
     {
@@ -34,39 +36,55 @@ public class ZipDecompressor implements FileDecompressor {
     @Override
     public void decompress(File inputZipFile) throws IOException {
         byte[] buffer = new byte[1024];
-        ZipInputStream zis =
-                new ZipInputStream(new FileInputStream(inputZipFile));
-        //get the zipped file list entry
-        ZipEntry ze = zis.getNextEntry();
+        try{
 
-        while(ze!=null){
-
-            String fileName = ze.getName();
-            File newFile = new File(fileName);
-
-            System.out.println("file unzip : " + newFile.getAbsoluteFile());
-
-
-
-            FileOutputStream fos = new FileOutputStream(newFile);
-
-            int len;
-            while ((len = zis.read(buffer)) > 0) {
-                fos.write(buffer, 0, len);
+            //create output directory is not exists
+            File folder = new File(outputFolder);
+            if(!folder.exists()){
+                folder.mkdir();
             }
 
-            fos.close();
-            ze = zis.getNextEntry();
+            //get the zip file content
+            ZipInputStream zis =
+                    new ZipInputStream(new FileInputStream(inputZipFile));
+            //get the zipped file list entry
+            ZipEntry ze = zis.getNextEntry();
+
+            while(ze!=null){
+
+                String fileName = ze.getName();
+                File newFile = new File(outputFolder + File.separator + fileName);
+
+                System.out.println("file unzip : "+ newFile.getAbsoluteFile());
+
+                //create all non exists folders
+                //else you will hit FileNotFoundException for compressed folder
+                new File(newFile.getParent()).mkdirs();
+
+                FileOutputStream fos = new FileOutputStream(newFile);
+
+                int len;
+                while ((len = zis.read(buffer)) > 0) {
+                    fos.write(buffer, 0, len);
+                }
+
+                fos.close();
+                ze = zis.getNextEntry();
+            }
+
+            zis.closeEntry();
+            zis.close();
+
+            System.out.println("Zip file is decompressed!");
+
+        }catch(IOException ex){
+            ex.printStackTrace();
         }
-
-        zis.closeEntry();
-        zis.close();
-
-        System.out.println("Zip is decompressed");
+    }
 
 
     }
 
 
-}
+
 

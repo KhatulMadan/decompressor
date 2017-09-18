@@ -22,7 +22,7 @@ public class Uncompressed implements FileDecompressor {
 
         if(!fileExtension.equalsIgnoreCase("ZIP")
                 && !fileExtension.equalsIgnoreCase("BZIP2")
-                && !!fileExtension.equalsIgnoreCase("GZIP"))
+                && !fileExtension.equalsIgnoreCase("GZIP"))
         {
             isUncompressed = true;
         }
