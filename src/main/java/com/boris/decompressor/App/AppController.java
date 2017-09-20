@@ -13,6 +13,8 @@ import java.io.IOException;
 
 /**
  * Created by boris on 15.09.17.
+ *
+ * Controller class to get requests from the user.
  */
 
 @Controller

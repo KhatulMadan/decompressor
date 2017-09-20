@@ -2,6 +2,8 @@ package com.boris.decompressor.Service;
 
 /**
  * Created by boris on 17.09.17.
+ *
+ * Service class to download a compressed file from GoogleDrive
  */
 
 
@@ -20,6 +22,13 @@ public class FileDownloader {
 
     private static final int BUFFER_SIZE = 4096;
     private String saveDir = "/Users/boris/Java/decompressor";
+
+    /**
+     * Download the requested file.
+     * @param fileURL is link to a file that needs to be downloaded from GoogleDrive.
+     * @return downloaded file.
+     * @throws IOException
+     */
 
 
     public File getFile(String fileURL)
@@ -83,6 +92,12 @@ public class FileDownloader {
         httpConn.disconnect();
         return myFile;
     }
+
+    /**
+     * Get the file extension as a String.
+     * @param file downloaded file.
+     * @return file extension as a String.
+     */
 
     public String getFileExtension(File file)
     {

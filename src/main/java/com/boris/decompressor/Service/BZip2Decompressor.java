@@ -11,11 +11,20 @@ import java.io.IOException;
 
 /**
  * Created by boris on 17.09.17.
+ *
+ * Implementation of FileDecompressor interface.
+ * Service class to decompress BZip2 files.
  */
 
 @Service
 @Component
 public class BZip2Decompressor implements FileDecompressor {
+
+    /**
+     * Check if the file could be decompressed with this service class.
+     * @param fileExtension is extension of the file that should be decompressed provided as a String.
+     * @return true if the file is of BZip2 type.
+     */
 
     @Override
     public boolean canDecompress(String fileExtension) {
@@ -28,6 +37,12 @@ public class BZip2Decompressor implements FileDecompressor {
 
         return isBZip2;
     }
+
+    /**
+     * Decompress the file.
+     * @param inputBZip2File is a compressed file.
+     * @throws IOException
+     */
 
     @Override
     public void decompress(File inputBZip2File) throws IOException {

@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  * Created by boris on 17.09.17.
+ *
+ * Service class that provides the correct decompressor for a file that should be decompressed and decompress it.
  */
 
 @Service
@@ -21,17 +23,15 @@ public class FileHandlerService {
     private FileDownloader fileDownloader;
 
     @Autowired
-    private BZip2Decompressor bZip2Decompressor;
+    private List<FileDecompressor> services;
 
-    @Autowired
-    private GZipDecompressor gZipDecompressor;
-
-    @Autowired
-    private ZipDecompressor zipDecompressor;
-
-    @Autowired
-    private Uncompressed uncompressed;
-
+    /**
+     * Download a file that should be decompressed.
+     * Iterate through the types of decompressors to find the correct one that should be used.
+     * Let you know if a file is compressed with unsupported compression or uncompressed at all.
+     * @param fileUrl the link to a file that should be downloaded and decompressed.
+     * @throws IOException
+     */
 
 public void processFile(String fileUrl) throws IOException {
 
@@ -39,21 +39,13 @@ public void processFile(String fileUrl) throws IOException {
     File myFile = fileDownloader.getFile(fileUrl);
     String extension = fileDownloader.getFileExtension(myFile);
 
-    List<FileDecompressor> services = new ArrayList<>();
-
-    services.add(bZip2Decompressor);
-    services.add(gZipDecompressor);
-    services.add(zipDecompressor);
-    services.add(uncompressed);
 
 
-    for (int i = 0; i<services.size(); i++)
-    {
-       if (services.get(i).canDecompress(extension) == true)
-       {
-           services.get(i).decompress(myFile);
-       }
-    }
+        FileDecompressor  decompressor = services.stream().filter(fileDecompressor -> fileDecompressor.canDecompress(extension)).findFirst().orElse( new Uncompressed ());
+            decompressor.decompress(myFile);
+
+
+
 
 
 }

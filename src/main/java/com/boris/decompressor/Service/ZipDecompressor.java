@@ -9,14 +9,25 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 /**
- * Created by boris on 15.09.17.
+ * Created by boris on 17.09.17.
+ *
+ * Implementation of FileDecompressor interface.
+ * Service class to decompress GZip files.
  */
 
 @Service
 @Component
 public class ZipDecompressor implements FileDecompressor {
 
+
+//Output folder could be change accoring to your needs
     private String outputFolder = "/Users/boris/Java/decompressor";
+
+    /**
+     * Check if the file could be decompressed with this service class.
+     * @param fileExtension is extension of the file that should be decompressed provided as a String.
+     * @return true if the file is of Zip type.
+     */
 
     @Override
     public boolean canDecompress(String fileExtension)
@@ -31,6 +42,12 @@ public class ZipDecompressor implements FileDecompressor {
 
         return isZip;
     }
+
+    /**
+     * Decompress the file.
+     * @param inputZipFile is a compressed file.
+     * @throws IOException
+     */
 
 
     @Override
