@@ -12,7 +12,7 @@ This micro service downloads the file and automatically decompresses it. Support
 
 If the file is not compressed or compression is not supported the app will let you know about this.
 
-# How to start
+# How to Start
 
 Go to http://localhost:8181/decompress?name= and provide the link to the file.
 
