@@ -1,7 +1,7 @@
 #DECOMPRESSOR
 ================
 
-Java micro service built to decompress the files downloaded from GoogleDrive.
+Java micro service that decompresses the files downloaded from GoogleDrive.
 
 # Overview
 
